@@ -1,0 +1,368 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-canvas: #F0F6FF;
+    --bg-surface: #EFF6FF;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F8FAFC;
+    --border-subtle: #DBEAFE;
+    --border-strong: #BFDBFE;
+    --primary-blue: #2563EB;
+    --primary-hover: #1D4ED8;
+    --soft-blue: #60A5FA;
+    --light-blue: #DBEAFE;
+    --very-light-blue: #EFF6FF;
+    --accent-cyan: #38BDF8;
+    --text-primary: #172554;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --dot-color: #BFDBFE;
+    --doodle-color: #3B82F6;
+  }
+
+  .dark {
+    --bg-canvas: #071426;
+    --bg-surface: #0B1F3A;
+    --bg-card: #102A4C;
+    --bg-card-hover: #163660;
+    --border-subtle: #1E3A5F;
+    --border-strong: #254F82;
+    --primary-blue: #3B82F6;
+    --primary-hover: #60A5FA;
+    --soft-blue: #93C5FD;
+    --light-blue: #1E3A5F;
+    --very-light-blue: #0B2548;
+    --accent-cyan: #22D3EE;
+    --text-primary: #F0F9FF;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --dot-color: #1E3A8A;
+    --doodle-color: #38BDF8;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  /* Custom Blue Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #BFDBFE;
+    border-radius: 9999px;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: #1E3A5F;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #60A5FA;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #3B82F6;
+  }
+}
+
+@layer utilities {
+  /* Subtle Blue Educational Dot Pattern */
+  .subtle-snow-dots {
+    background-image: radial-gradient(var(--dot-color) 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+  }
+  .subtle-paper {
+    background-image: radial-gradient(var(--dot-color) 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+  }
+  .blue-glow {
+    box-shadow: 0 4px 24px -2px rgba(37, 99, 235, 0.25);
+  }
+  .dark .blue-glow {
+    box-shadow: 0 4px 24px -2px rgba(34, 211, 238, 0.3);
+  }
+}
+
+/* -------------------------------------------------------------
+   PALETTE OVERRIDES: LIGHT THEME (White & Soft Blue)
+   ------------------------------------------------------------- */
+.bg-\[\#7C5CFC\] {
+  background-color: var(--primary-blue) !important;
+}
+.text-\[\#7C5CFC\] {
+  color: var(--primary-blue) !important;
+}
+.border-\[\#7C5CFC\] {
+  border-color: var(--primary-blue) !important;
+}
+.fill-\[\#7C5CFC\] {
+  fill: var(--primary-blue) !important;
+}
+.from-\[\#7C5CFC\] {
+  --tw-gradient-from: var(--primary-blue) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(37 99 235 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+.to-\[\#9678FA\] {
+  --tw-gradient-to: var(--soft-blue) var(--tw-gradient-to-position) !important;
+}
+.via-\[\#9678FA\] {
+  --tw-gradient-to: rgb(96 165 250 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--soft-blue) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+.to-\[\#5638DC\] {
+  --tw-gradient-to: var(--primary-hover) var(--tw-gradient-to-position) !important;
+}
+.bg-\[\#9678FA\] {
+  background-color: var(--soft-blue) !important;
+}
+.text-\[\#9678FA\] {
+  color: var(--soft-blue) !important;
+}
+.bg-\[\#F1EDFE\] {
+  background-color: var(--very-light-blue) !important;
+}
+.border-\[\#DCD3FC\] {
+  border-color: var(--border-strong) !important;
+}
+.border-\[\#DBEAFE\] {
+  border-color: var(--border-subtle) !important;
+}
+.border-\[\#BFDBFE\] {
+  border-color: var(--border-strong) !important;
+}
+.text-\[\#172554\] {
+  color: var(--text-primary) !important;
+}
+.text-\[\#0F172A\] {
+  color: var(--text-primary) !important;
+}
+.text-\[\#1E1B33\] {
+  color: var(--text-primary) !important;
+}
+.text-\[\#676282\] {
+  color: var(--text-secondary) !important;
+}
+.text-\[\#475569\] {
+  color: var(--text-secondary) !important;
+}
+.text-\[\#64748B\] {
+  color: var(--text-muted) !important;
+}
+.border-\[\#E6E8F6\] {
+  border-color: var(--border-subtle) !important;
+}
+.bg-\[\#F8F9FE\], .bg-\[\#FAFBFD\], .bg-\[\#FBFBFE\] {
+  background-color: var(--bg-canvas) !important;
+}
+.bg-\[\#F0F6FF\], .bg-\[\#EFF6FF\] {
+  background-color: var(--very-light-blue) !important;
+}
+.bg-\[\#FFFFFF\] {
+  background-color: var(--bg-card) !important;
+}
+.hover\:bg-\[\#6846EB\]:hover {
+  background-color: var(--primary-hover) !important;
+}
+
+/* -------------------------------------------------------------
+   PALETTE OVERRIDES: DARK THEME (Deep Navy & Cyan Accent)
+   ------------------------------------------------------------- */
+/* Card Background Gradients */
+.dark .from-\[\#FFFFFF\] {
+  --tw-gradient-from: #102A4C var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(16 42 76 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+.dark .via-\[\#F8F9FE\] {
+  --tw-gradient-to: rgb(11 31 58 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), #0B1F3A var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+.dark .to-\[\#EFF6FF\],
+.dark .to-\[\#F1F3FB\] {
+  --tw-gradient-to: #0B1F3A var(--tw-gradient-to-position) !important;
+}
+
+/* Surface & Card Backgrounds */
+.dark .bg-\[\#FFFFFF\] {
+  background-color: #102A4C !important;
+}
+.dark .bg-\[\#F8F9FE\],
+.dark .bg-\[\#FAFBFD\],
+.dark .bg-\[\#FBFBFE\],
+.dark .bg-\[\#F1F3FB\],
+.dark .bg-\[\#F0F6FF\],
+.dark .bg-\[\#EFF6FF\] {
+  background-color: #0B1F3A !important;
+}
+.dark .bg-\[\#F1EDFE\] {
+  background-color: #0B2548 !important;
+}
+
+/* Primary Headings & High-Contrast Text */
+.dark .text-\[\#172554\],
+.dark .text-\[\#1E1B33\],
+.dark .text-\[\#0F172A\],
+.dark .text-\[\#1E293B\] {
+  color: #F0F9FF !important;
+}
+.dark .hover\:text-\[\#172554\]:hover,
+.dark .hover\:text-\[\#1E1B33\]:hover,
+.dark .hover\:text-\[\#0F172A\]:hover {
+  color: #F0F9FF !important;
+}
+
+/* Secondary & Muted Text */
+.dark .text-\[\#676282\],
+.dark .text-\[\#475569\],
+.dark .text-\[\#64748B\],
+.dark .text-\[\#334155\] {
+  color: #94A3B8 !important;
+}
+.dark .hover\:text-\[\#676282\]:hover,
+.dark .hover\:text-\[\#475569\]:hover,
+.dark .hover\:text-\[\#64748B\]:hover {
+  color: #F0F9FF !important;
+}
+
+/* Borders */
+.dark .border-\[\#E6E8F6\],
+.dark .border-\[\#DCD3FC\],
+.dark .border-\[\#DBEAFE\],
+.dark .border-\[\#BFDBFE\],
+.dark .border-\[\#93C5FD\] {
+  border-color: #1E3A5F !important;
+}
+
+/* Blue & Indigo Accents */
+.dark .bg-\[\#7C5CFC\] {
+  background-color: #3B82F6 !important;
+}
+.dark .text-\[\#7C5CFC\] {
+  color: #60A5FA !important;
+}
+.dark .fill-\[\#7C5CFC\] {
+  fill: #60A5FA !important;
+}
+.dark .from-\[\#7C5CFC\] {
+  --tw-gradient-from: #3B82F6 var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(59 130 246 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+.dark .to-\[\#9678FA\] {
+  --tw-gradient-to: #22D3EE var(--tw-gradient-to-position) !important;
+}
+.dark .via-\[\#9678FA\] {
+  --tw-gradient-to: rgb(34 211 238 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), #22D3EE var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+.dark .to-\[\#5638DC\] {
+  --tw-gradient-to: #60A5FA var(--tw-gradient-to-position) !important;
+}
+.dark .bg-\[\#9678FA\] {
+  background-color: #22D3EE !important;
+}
+.dark .text-\[\#9678FA\] {
+  color: #22D3EE !important;
+}
+
+/* Interactive Hovers */
+.dark .hover\:bg-\[\#F0F2FA\]:hover,
+.dark .hover\:bg-\[\#F2F4FB\]:hover,
+.dark .hover\:bg-\[\#EFF6FF\]:hover,
+.dark .hover\:bg-\[\#F0F6FF\]:hover,
+.dark .hover\:bg-\[\#DBEAFE\]:hover,
+.dark .hover\:bg-\[\#F8F9FE\]:hover {
+  background-color: #163660 !important;
+}
+.dark .hover\:bg-\[\#6846EB\]:hover {
+  background-color: #2563EB !important;
+}
+
+/* Status Badges & Alerts (Green / Mint / Emerald) */
+.dark .bg-\[\#ECFDF5\],
+.dark .bg-\[\#F0FDF4\] {
+  background-color: rgba(6, 78, 59, 0.45) !important;
+}
+.dark .text-\[\#065F46\],
+.dark .text-\[\#10B981\] {
+  color: #6EE7B7 !important;
+}
+.dark .border-\[\#A7F3D0\],
+.dark .border-\[\#BBF7D0\] {
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Status Badges & Alerts (Rose / Red / Danger) */
+.dark .bg-\[\#FFF1F2\],
+.dark .bg-\[\#FFF8F8\],
+.dark .bg-\[\#FEF2F2\],
+.dark .bg-\[\#FEE2E2\] {
+  background-color: rgba(127, 29, 29, 0.4) !important;
+}
+.dark .text-\[\#9F1239\],
+.dark .text-\[\#BE123C\],
+.dark .text-\[\#991B1B\],
+.dark .text-\[\#B91C1C\],
+.dark .text-\[\#F43F5E\] {
+  color: #FDA4AF !important;
+}
+.dark .border-\[\#FECDD3\],
+.dark .border-\[\#FCA5A5\] {
+  border-color: rgba(244, 63, 94, 0.3) !important;
+}
+
+/* Status Badges & Alerts (Amber / Warning) */
+.dark .bg-\[\#FFFBEB\],
+.dark .bg-\[\#FEF3C7\] {
+  background-color: rgba(120, 53, 15, 0.4) !important;
+}
+.dark .text-\[\#B45309\],
+.dark .text-\[\#92400E\] {
+  color: #FDE68A !important;
+}
+.dark .border-\[\#FDE68A\],
+.dark .border-\[\#FCD34D\] {
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Form Inputs */
+.dark input,
+.dark select,
+.dark textarea {
+  color: #F0F9FF !important;
+}
+
+/* Animations */
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-float-in {
+  animation: floatIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes snowFloat {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(4deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.animate-snow-float {
+  animation: snowFloat 4s ease-in-out infinite;
+}
