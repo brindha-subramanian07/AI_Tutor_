@@ -483,27 +483,285 @@ const MLSummaryChecklistVisual = ({ visualData, onTakeQuiz }) => {
   );
 };
 
-// Generic Interactive Flow Visual for other topics
-const GenericFlowVisual = ({ slide, slideIndex, totalSlides }) => {
+// Generic Interactive Visual Components
+const TimelineVisual = ({ visualData }) => {
+  const events = visualData?.events || visualData?.steps || visualData?.timeline || [
+    { title: "Initial Phase", desc: "Foundational conditions and input state", time: "Stage 1" },
+    { title: "Transformation", desc: "Core mechanisms and operational progress", time: "Stage 2" },
+    { title: "Equilibrium", desc: "Outcome state and invariant stabilization", time: "Stage 3" }
+  ];
+
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-2 text-center p-2">
-      <div className="w-10 h-10 rounded-2xl bg-[#F1EDFE] flex items-center justify-center text-[#7C5CFC] mb-1">
-        <Layers className="w-5 h-5 text-[#7C5CFC]" />
+    <div className="w-full flex flex-col gap-2 p-1">
+      <div className="flex items-center gap-1.5 text-xs font-bold text-[#7C5CFC] mb-1">
+        <Layers className="w-4 h-4" />
+        <span>Sequential Timeline</span>
       </div>
-      <span className="text-xs font-bold text-[#1E1B33]">
-        {slide?.title}
-      </span>
-      <div className="w-full max-w-[200px] h-2 bg-[#E6E8F6] rounded-full overflow-hidden my-1">
-        <div
-          className="h-full bg-gradient-to-r from-[#7C5CFC] to-[#9678FA] rounded-full transition-all"
-          style={{ width: `${((slideIndex + 1) / totalSlides) * 100}%` }}
-        />
+      <div className="relative pl-5 border-l-2 border-[#DCD3FC] space-y-2.5 my-1">
+        {events.map((ev, i) => (
+          <div key={i} className="relative group">
+            <div className="absolute -left-[27px] top-1 w-3.5 h-3.5 rounded-full bg-white border-2 border-[#7C5CFC] group-hover:scale-125 transition-all" />
+            <div className="p-2 rounded-xl bg-white border border-[#E6E8F6] shadow-sm">
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="font-bold text-[#1E1B33]">{ev.title || ev.name || `Phase ${i + 1}`}</span>
+                <span className="text-[#7C5CFC] font-mono">{ev.time || ev.year || `Step ${i + 1}`}</span>
+              </div>
+              <p className="text-[11px] text-[#676282] mt-0.5 leading-tight">{ev.desc || ev.description || ev.content}</p>
+            </div>
+          </div>
+        ))}
       </div>
-      <span className="text-[11px] text-[#676282]">
-        Educational step-by-step model rendered by AI Tutor
-      </span>
     </div>
   );
+};
+
+const ComparisonTableVisual = ({ visualData }) => {
+  const headers = visualData?.headers || ["Criterion", visualData?.left_title || "Perspective A", visualData?.right_title || "Perspective B"];
+  const rows = visualData?.rows || visualData?.comparison || [
+    { label: "Mechanism", left: "Explicit Rules", right: "Learned Patterns" },
+    { label: "Adaptability", left: "Static", right: "Self-Optimizing" },
+    { label: "Scalability", left: "High Friction", right: "Autonomous" }
+  ];
+
+  return (
+    <div className="w-full flex flex-col gap-2 p-1 overflow-x-auto">
+      <div className="flex items-center gap-1.5 text-xs font-bold text-[#7C5CFC] mb-1">
+        <Split className="w-4 h-4" />
+        <span>Comparative Analysis</span>
+      </div>
+      <div className="rounded-xl border border-[#E6E8F6] overflow-hidden text-left bg-white text-[11px]">
+        <div className="grid grid-cols-3 bg-[#F8F9FE] p-2 font-bold text-[#1E1B33] border-b border-[#E6E8F6]">
+          <span>{headers[0]}</span>
+          <span className="text-[#676282]">{headers[1]}</span>
+          <span className="text-[#7C5CFC]">{headers[2]}</span>
+        </div>
+        {rows.map((r, i) => (
+          <div key={i} className="grid grid-cols-3 p-2 border-b border-[#E6E8F6] last:border-b-0 hover:bg-[#F1EDFE]/30 transition-colors">
+            <span className="font-semibold text-[#1E1B33]">{r.label || r.criterion || r[0]}</span>
+            <span className="text-[#676282]">{r.left || r.traditional || r[1]}</span>
+            <span className="text-[#7C5CFC] font-semibold">{r.right || r.ml || r[2]}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const FlowDiagramVisual = ({ visualData }) => {
+  const steps = visualData?.stages || visualData?.nodes || visualData?.steps || [
+    { name: "Input & Context", desc: "Initial state and environmental variables" },
+    { name: "Active Process", desc: "Transformation and logic execution" },
+    { name: "Outcome & Impact", desc: "Stabilized invariant and measurable result" }
+  ];
+
+  return (
+    <div className="w-full flex flex-col gap-2 p-1">
+      <div className="flex items-center gap-1.5 text-xs font-bold text-[#7C5CFC] mb-1">
+        <Layers className="w-4 h-4" />
+        <span>Process Flow Architecture</span>
+      </div>
+      <div className="flex flex-col md:flex-row items-center justify-between gap-1.5 my-1">
+        {steps.map((st, i) => (
+          <React.Fragment key={i}>
+            <div className="flex-1 w-full p-2.5 rounded-xl bg-white border border-[#DCD3FC] text-center shadow-sm">
+              <span className="w-5 h-5 rounded-full bg-[#F1EDFE] text-[#7C5CFC] text-[10px] font-black inline-flex items-center justify-center mb-1">
+                {i + 1}
+              </span>
+              <div className="text-[11px] font-bold text-[#1E1B33]">{st.name || st.title || `Stage ${i + 1}`}</div>
+              <p className="text-[10px] text-[#676282] mt-0.5 leading-tight">{st.desc || st.description}</p>
+            </div>
+            {i < steps.length - 1 && (
+              <ArrowRight className="w-4 h-4 text-[#7C5CFC] shrink-0 my-1 md:my-0 rotate-90 md:rotate-0" />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const BarChartVisual = ({ visualData }) => {
+  const bars = visualData?.bars || visualData?.data || visualData?.metrics || [
+    { label: "Baseline", value: 35, color: "#9CA3AF" },
+    { label: "Iterative", value: 72, color: "#A78BFA" },
+    { label: "Optimal", value: 95, color: "#7C5CFC" }
+  ];
+
+  return (
+    <div className="w-full flex flex-col gap-2 p-1">
+      <div className="flex items-center justify-between text-xs font-bold text-[#7C5CFC] mb-1">
+        <span className="flex items-center gap-1.5">
+          <BarChart2 className="w-4 h-4" />
+          {visualData?.title || "Distribution & Metrics"}
+        </span>
+        <span className="text-[10px] text-[#676282] font-normal">{visualData?.unit || "Normalized %"}</span>
+      </div>
+      <div className="space-y-2 my-1">
+        {bars.map((b, i) => (
+          <div key={i} className="space-y-0.5">
+            <div className="flex justify-between text-[10px] text-[#1E1B33]">
+              <span className="font-semibold">{b.label || b.name}</span>
+              <span className="font-mono text-[#7C5CFC]">{b.value}{visualData?.unit ? ` ${visualData.unit}` : '%'}</span>
+            </div>
+            <div className="w-full h-2.5 bg-[#F1EDFE] rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-500"
+                style={{
+                  width: `${Math.min(100, Math.max(0, b.value))}%`,
+                  backgroundColor: b.color || '#7C5CFC'
+                }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Zero dangerouslySetInnerHTML Formula Visualizer
+const FormulaViewVisual = ({ visualData }) => {
+  const formulaStr = visualData?.formula || visualData?.equation || "E = mc²";
+  const breakdown = visualData?.variables || visualData?.breakdown || [
+    { symbol: "E", meaning: "Energy" },
+    { symbol: "m", meaning: "Mass" },
+    { symbol: "c", meaning: "Speed of light in vacuum" }
+  ];
+
+  return (
+    <div className="w-full flex flex-col gap-2 p-1">
+      <div className="flex items-center gap-1.5 text-xs font-bold text-[#7C5CFC] mb-1">
+        <Sparkles className="w-4 h-4" />
+        <span>Mathematical & Scientific Formula</span>
+      </div>
+      <div className="p-3 rounded-xl bg-gradient-to-r from-[#181528] to-[#251D42] text-white text-center shadow-sm border border-[#DCD3FC]/20">
+        <div className="text-[10px] text-[#A78BFA] uppercase tracking-wider mb-1">Governing Equation</div>
+        <div className="text-base md:text-lg font-mono font-black text-[#F1EDFE] tracking-wide select-all">
+          {formulaStr}
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-1.5 mt-1 text-[11px]">
+        {breakdown.map((item, i) => (
+          <div key={i} className="p-1.5 rounded-lg bg-white border border-[#E6E8F6] flex items-center gap-1.5">
+            <span className="px-1.5 py-0.5 rounded bg-[#F1EDFE] text-[#7C5CFC] font-mono font-bold text-[10px]">
+              {item.symbol || item.term}
+            </span>
+            <span className="text-[#676282] truncate">{item.meaning || item.desc}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Self-contained Local State Quiz Visual (zero impact on timeline/TTS)
+const QuizCardVisual = ({ visualData }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
+  const question = visualData?.question || visualData?.prompt || "Check your immediate understanding:";
+  const options = visualData?.options || ["Fundamental invariant", "Arbitrary side-effect", "Unconstrained loop", "Hardware fault"];
+  const correctIdx = visualData?.correct_index ?? visualData?.correctIndex ?? 0;
+
+  return (
+    <div className="w-full flex flex-col gap-2 p-1">
+      <div className="flex items-center justify-between text-xs font-bold text-[#7C5CFC] mb-1">
+        <span className="flex items-center gap-1.5">
+          <HelpCircle className="w-4 h-4" />
+          <span>Interactive Checkpoint</span>
+        </span>
+        {selectedOption !== null && (
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+            selectedOption === correctIdx ? 'bg-[#ECFDF5] text-[#065F46]' : 'bg-[#FEF2F2] text-[#991B1B]'
+          }`}>
+            {selectedOption === correctIdx ? 'Correct!' : 'Review takeaway'}
+          </span>
+        )}
+      </div>
+      <p className="text-[11px] font-bold text-[#1E1B33]">{question}</p>
+      <div className="space-y-1.5 my-1">
+        {options.map((opt, i) => {
+          let btnStyle = "bg-white border-[#E6E8F6] text-[#1E1B33] hover:bg-[#F8F9FE]";
+          if (selectedOption !== null) {
+            if (i === correctIdx) {
+              btnStyle = "bg-[#ECFDF5] border-[#10B981] text-[#065F46] font-bold";
+            } else if (i === selectedOption) {
+              btnStyle = "bg-[#FEF2F2] border-[#EF4444] text-[#991B1B]";
+            }
+          }
+          return (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setSelectedOption(i)}
+              className={`w-full p-2 text-left rounded-xl border text-[11px] transition-all flex items-center justify-between ${btnStyle}`}
+            >
+              <span>{opt}</span>
+              {selectedOption !== null && i === correctIdx && (
+                <Check className="w-3.5 h-3.5 text-[#10B981]" />
+              )}
+            </button>
+          );
+        })}
+      </div>
+      {visualData?.explanation && selectedOption !== null && (
+        <p className="text-[10px] text-[#676282] italic leading-tight">
+          {visualData.explanation}
+        </p>
+      )}
+    </div>
+  );
+};
+
+const SafeFallbackVisual = ({ slide, slideIndex, totalSlides }) => {
+  return (
+    <div className="w-full flex flex-col items-center justify-center gap-2 text-center p-3">
+      <div className="w-12 h-12 rounded-2xl bg-[#F1EDFE] flex items-center justify-center text-[#7C5CFC] shadow-sm">
+        <Sparkles className="w-6 h-6 text-[#7C5CFC]" />
+      </div>
+      <span className="text-xs font-bold text-[#1E1B33]">
+        {slide?.title || "Conceptual Mental Model"}
+      </span>
+      <p className="text-[11px] text-[#676282] max-w-xs leading-relaxed">
+        {slide?.subtitle || "Grounded mental model synthesized by AI Tutor for conceptual clarity."}
+      </p>
+      <div className="w-full max-w-[200px] h-1.5 bg-[#E6E8F6] rounded-full overflow-hidden my-1">
+        <div
+          className="h-full bg-gradient-to-r from-[#7C5CFC] to-[#9678FA] rounded-full transition-all"
+          style={{ width: `${(((slideIndex || 0) + 1) / (totalSlides || 1)) * 100}%` }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// Global Visual Component Registry
+export const VISUAL_REGISTRY = {
+  // ML components
+  ml_paradigm_shift: MLParadigmShiftVisual,
+  ml_spam_classifier: MLSpamClassifierVisual,
+  ml_workflow_pipeline: MLWorkflowPipelineVisual,
+  ml_paradigms_matrix: MLParadigmsMatrixVisual,
+  ml_train_test_split: MLTrainTestSplitVisual,
+  ml_worked_example: MLWorkedExampleVisual,
+  ml_evaluation_metrics: MLEvaluationMetricsVisual,
+  ml_summary_checklist: MLSummaryChecklistVisual,
+  // Generic components
+  Timeline: TimelineVisual,
+  ComparisonTable: ComparisonTableVisual,
+  FlowDiagram: FlowDiagramVisual,
+  BarChart: BarChartVisual,
+  FormulaView: FormulaViewVisual,
+  QuizCard: QuizCardVisual,
+  SafeFallbackVisual: SafeFallbackVisual,
+  // Aliases
+  interactive_flow_diagram: FlowDiagramVisual,
+  generic_flow: FlowDiagramVisual,
+  timeline: TimelineVisual,
+  comparison_table: ComparisonTableVisual,
+  flow_diagram: FlowDiagramVisual,
+  bar_chart: BarChartVisual,
+  formula_view: FormulaViewVisual,
+  quiz_card: QuizCardVisual,
+  safe_fallback: SafeFallbackVisual
 };
 
 export const LecturePlayer = () => {
@@ -635,31 +893,26 @@ export const LecturePlayer = () => {
     }
   };
 
-  // Render proper pedagogical visual based on visual_type or diagram tag
+  // Render proper pedagogical visual from registry based on visual.component, visual_type, or diagram
   const renderVisualComponent = () => {
-    const vType = currentSlide.visual_type || currentSlide.diagram;
-    const vData = currentSlide.visual_data;
+    const visual = currentSlide.visual || {};
+    const compName = visual.component || currentSlide.visual_type || currentSlide.diagram || 'SafeFallbackVisual';
+    const visualData = visual.data || currentSlide.visual_data || {};
 
-    switch (vType) {
-      case 'ml_paradigm_shift':
-        return <MLParadigmShiftVisual visualData={vData} />;
-      case 'ml_spam_classifier':
-        return <MLSpamClassifierVisual visualData={vData} />;
-      case 'ml_workflow_pipeline':
-        return <MLWorkflowPipelineVisual visualData={vData} />;
-      case 'ml_paradigms_matrix':
-        return <MLParadigmsMatrixVisual visualData={vData} />;
-      case 'ml_train_test_split':
-        return <MLTrainTestSplitVisual visualData={vData} />;
-      case 'ml_worked_example':
-        return <MLWorkedExampleVisual visualData={vData} />;
-      case 'ml_evaluation_metrics':
-        return <MLEvaluationMetricsVisual visualData={vData} />;
-      case 'ml_summary_checklist':
-        return <MLSummaryChecklistVisual visualData={vData} onTakeQuiz={() => startQuiz(currentTopic.id)} />;
-      default:
-        return <GenericFlowVisual slide={currentSlide} slideIndex={currentSlideIndex} totalSlides={slides.length} />;
+    const Component = VISUAL_REGISTRY[compName] || VISUAL_REGISTRY.SafeFallbackVisual;
+
+    if (compName === 'ml_summary_checklist') {
+      return <Component visualData={visualData} onTakeQuiz={() => startQuiz(currentTopic.id)} />;
     }
+
+    return (
+      <Component
+        visualData={visualData}
+        slide={currentSlide}
+        slideIndex={currentSlideIndex}
+        totalSlides={slides.length}
+      />
+    );
   };
 
   return (
@@ -733,16 +986,48 @@ export const LecturePlayer = () => {
               </h2>
             </div>
 
-            {/* Embedded Code Snippet */}
-            {currentSlide.code && (
+            {/* Code Block ONLY rendered if code is present; otherwise render conceptual synthesis */}
+            {currentSlide.code ? (
               <div className="rounded-2xl bg-[#181528] text-[#F8F9FE] p-3.5 font-mono text-xs border border-[#E6E8F6]/20 shadow-snow-md overflow-x-auto relative">
                 <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-white/10 text-[10px] text-[#A78BFA]">
-                  <span>Python / Formal Model</span>
+                  <span className="uppercase tracking-wider font-bold">
+                    {typeof currentSlide.code === 'object' && currentSlide.code?.language
+                      ? currentSlide.code.language
+                      : 'Code Snippet'}
+                  </span>
                   <span>Interactive Walkthrough</span>
                 </div>
                 <pre className="text-[#F1EDFE] leading-relaxed max-h-48 overflow-y-auto">
-                  <code>{currentSlide.code}</code>
+                  <code>
+                    {typeof currentSlide.code === 'object'
+                      ? (currentSlide.code.snippet || '')
+                      : currentSlide.code}
+                  </code>
                 </pre>
+                {typeof currentSlide.code === 'object' && currentSlide.code?.explanation && (
+                  <div className="mt-2 pt-2 border-t border-white/10 text-[11px] text-[#C4B5FD] font-sans">
+                    {currentSlide.code.explanation}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="rounded-2xl bg-gradient-to-br from-[#F8F9FE] to-[#F1EDFE] border border-[#E6E8F6] p-4 space-y-3 shadow-snow-sm">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#7C5CFC]">
+                  <Sparkles className="w-4 h-4 text-[#7C5CFC]" />
+                  <span>Core Conceptual Synthesis</span>
+                </div>
+                {currentSlide.learning_objective && (
+                  <div className="text-xs text-[#1E1B33] leading-relaxed">
+                    <span className="font-semibold text-[#676282] block text-[10px] uppercase tracking-wider mb-0.5">Objective:</span>
+                    {currentSlide.learning_objective}
+                  </div>
+                )}
+                {currentSlide.key_takeaway && (
+                  <div className="p-2.5 rounded-xl bg-white border border-[#DCD3FC] text-xs text-[#1E1B33]">
+                    <span className="font-bold text-[#7C5CFC] block text-[10px] uppercase tracking-wider mb-0.5">Key Takeaway:</span>
+                    {currentSlide.key_takeaway}
+                  </div>
+                )}
               </div>
             )}
           </div>

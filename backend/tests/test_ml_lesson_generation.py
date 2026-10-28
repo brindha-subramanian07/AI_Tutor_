@@ -50,11 +50,13 @@ def test_basics_of_machine_learning_e2e(client):
 
         # Verify that all Python code blocks have 100% valid syntax via AST parsing
         code = slide.get("code")
-        if code and code.strip():
-            try:
-                ast.parse(code)
-            except SyntaxError as e:
-                assert False, f"Syntax error in scene {idx+1} code: {e}\nCode:\n{code}"
+        if code:
+            snippet = code.get("snippet") if isinstance(code, dict) else code
+            if snippet and snippet.strip():
+                try:
+                    ast.parse(snippet)
+                except SyntaxError as e:
+                    assert False, f"Syntax error in scene {idx+1} code: {e}\nCode:\n{snippet}"
 
     # 3. Verify key concepts & code examples
     assert len(content.get("keyConcepts", [])) >= 4

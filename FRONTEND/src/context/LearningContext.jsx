@@ -692,27 +692,60 @@ export const LearningProvider = ({ children }) => {
           }
         ];
       } else {
-        // High quality multi-scene generic curriculum
+        const isSql = /sql|database|query|table|join/i.test(topicQuery);
+        const isJs = /javascript|typescript|react|node|dom|closure/i.test(topicQuery);
+        const isPython = /python|pandas|numpy|django|flask|fastapi/i.test(topicQuery);
+        const isProg = isSql || isJs || isPython || /programming|syntax|function|variable|class|algorithm/i.test(topicQuery);
+        const progLang = isSql ? 'sql' : isJs ? 'javascript' : isPython ? 'python' : 'none';
+
+        const codeSnippet1 = isProg ? (
+          progLang === 'sql'
+            ? { language: 'sql', snippet: `-- Conceptual schema query for ${topicQuery}\nSELECT id, name, status\nFROM system_records\nWHERE topic = '${topicQuery}';`, explanation: 'Initial dataset retrieval query.' }
+            : progLang === 'javascript'
+            ? { language: 'javascript', snippet: `// Foundations of ${topicQuery}\nfunction verifySystem(topic) {\n  return { topic, initialized: true };\n}\nconsole.log(verifySystem("${topicQuery}"));`, explanation: 'Basic module initialization.' }
+            : { language: 'python', snippet: `# Foundations of ${topicQuery}\ndef verify_foundation():\n    return f"Active domain: ${topicQuery}"\nprint(verify_foundation())`, explanation: 'Basic system verification.' }
+        ) : null;
+
+        const codeSnippet2 = isProg ? (
+          progLang === 'sql'
+            ? { language: 'sql', snippet: `-- State transition query\nUPDATE system_records\nSET status = 'Processed'\nWHERE topic = '${topicQuery}';`, explanation: 'State update transaction.' }
+            : progLang === 'javascript'
+            ? { language: 'javascript', snippet: `// Operational sequence\nconst stages = ["Validate Inputs", "Apply Logic", "Verify Invariants"];\nstages.forEach(step => console.log(\`Processing: \${step}\`));`, explanation: 'Sequential execution traversal.' }
+            : { language: 'python', snippet: `# Operational sequence\nstages = ["Validate Inputs", "Apply Logic", "Verify Invariants"]\nfor step in stages:\n    print(f"Processing: {step} in ${topicQuery}")`, explanation: 'State loop processing.' }
+        ) : null;
+
+        // High quality multi-scene generic curriculum without forced Python
         fallbackSlides = [
           {
             id: 1,
+            scene_type: "concept",
             title: `Foundations of ${formattedTitle}`,
             subtitle: "Core Mental Model & Domain Terminology",
-            diagram: "interactive_flow_diagram",
-            visual_type: "interactive_flow_diagram",
+            visual: {
+              component: "FlowDiagram",
+              data: {
+                stages: [
+                  { step: 1, name: "Problem Definition", desc: `Why ${formattedTitle} is necessary in modern analysis.` },
+                  { step: 2, name: "Core Model", desc: "Foundational conceptual framework." },
+                  { step: 3, name: "Practical Value", desc: "Measurable architectural advantages." }
+                ]
+              }
+            },
+            visual_type: "FlowDiagram",
+            diagram: "FlowDiagram",
             visual_data: {
               stages: [
-                { step: 1, name: "Problem Definition", desc: `Why ${formattedTitle} is necessary in modern engineering.` },
+                { step: 1, name: "Problem Definition", desc: `Why ${formattedTitle} is necessary in modern analysis.` },
                 { step: 2, name: "Core Model", desc: "Foundational conceptual framework." },
                 { step: 3, name: "Practical Value", desc: "Measurable architectural advantages." }
               ]
             },
-            narration: `Welcome to this comprehensive tutorial on ${topicQuery}. In this lecture, we explore the core principles, operational mechanics, and production best practices governing this topic.`,
-            code: `# Architecture overview for ${topicQuery}\ndef verify_foundation():\n    return f"Active domain: ${topicQuery}"\nprint(verify_foundation())`,
+            narration: `Welcome to this comprehensive lecture on ${topicQuery}. In this session, we explore the core principles, operational mechanics, and real-world mechanisms governing this topic.`,
+            code: codeSnippet1,
             visualNotes: [
               `Establishes essential vocabulary for ${topicQuery}`,
               "Breaks complex prerequisites into intuitive building blocks",
-              "Provides concrete architectural analogies"
+              "Provides concrete analytical analogies"
             ],
             estimated_duration_sec: 22,
             transition: "Let us now dive into the step-by-step operational mechanics.",
@@ -720,47 +753,82 @@ export const LearningProvider = ({ children }) => {
           },
           {
             id: 2,
+            scene_type: "diagram",
             title: "Operational Mechanics & State Transitions",
-            subtitle: "Step-by-Step Data Flow and Invariant Verification",
-            diagram: "interactive_flow_diagram",
-            visual_type: "interactive_flow_diagram",
+            subtitle: "Step-by-Step Dynamics and Invariant Verification",
+            visual: {
+              component: "ComparisonTable",
+              data: {
+                left_title: "Static Conditions",
+                right_title: "Active Dynamics",
+                rows: [
+                  { label: "Core Input", left: "Base parameters", right: "Active excitation" },
+                  { label: "Transition Rule", left: "Boundary constraints", right: "Invariant preservation" },
+                  { label: "Final State", left: "Rest equilibrium", right: "Measurable outcome" }
+                ]
+              }
+            },
+            visual_type: "ComparisonTable",
+            diagram: "ComparisonTable",
             visual_data: {
-              stages: [
-                { step: 1, name: "Input Validation", desc: "Sanitizing parameters." },
-                { step: 2, name: "Execution Loop", desc: "Transforming state invariants." },
-                { step: 3, name: "Output Generation", desc: "Emitting predictable results." }
+              left_title: "Static Conditions",
+              right_title: "Active Dynamics",
+              rows: [
+                { label: "Core Input", left: "Base parameters", right: "Active excitation" },
+                { label: "Transition Rule", left: "Boundary constraints", right: "Invariant preservation" },
+                { label: "Final State", left: "Rest equilibrium", right: "Measurable outcome" }
               ]
             },
-            narration: `Now examining how ${topicQuery} operates step by step. Notice how data flows through each transformation stage while preserving critical invariants.`,
-            code: `# Operational sequence\nstages = ["Validate Inputs", "Apply Logic", "Verify Invariants"]\nfor step in stages:\n    print(f"Processing: {step} in ${topicQuery}")`,
+            narration: `Now examining how ${topicQuery} operates step by step. Notice how information and energy flow through each transition while preserving critical invariants.`,
+            code: codeSnippet2,
             visualNotes: [
-              "Dataflow vector visualization",
+              "Dataflow and state vector visualization",
               "State invariant validation at each transition",
               "Protection against boundary conditions"
             ],
             estimated_duration_sec: 22,
-            transition: "Next, we examine industry production patterns.",
-            key_takeaway: "Predictable software systems require explicit invariant enforcement at every transition."
+            transition: "Next, we examine real-world applications and trade-offs.",
+            key_takeaway: "Predictable systems require explicit invariant enforcement at every transition."
           },
           {
             id: 3,
-            title: "Real-World Engineering Application",
-            subtitle: "Architecture in Production Environments",
-            diagram: "interactive_flow_diagram",
-            visual_type: "interactive_flow_diagram",
-            narration: `In industry, mastering ${topicQuery} is critical for scalable, fault-tolerant software engineering.`,
-            code: `class ProductionHandler:\n    def __init__(self, topic="${topicQuery}"):\n        self.topic = topic\n        self.verified = True\n\nhandler = ProductionHandler()\nprint(f"System status: {handler.verified}")`,
+            scene_type: "summary",
+            title: "Real-World Application & Synthesis",
+            subtitle: "Systemic Impacts and Best Practices",
+            visual: {
+              component: "Timeline",
+              data: {
+                events: [
+                  { title: "Theoretical Foundations", desc: "Formulation of governing laws and principles.", time: "Phase 1" },
+                  { title: "Empirical Validation", desc: "Rigorous testing and boundary verification.", time: "Phase 2" },
+                  { title: "Production Application", desc: "Scalable real-world adoption and monitoring.", time: "Phase 3" }
+                ]
+              }
+            },
+            visual_type: "Timeline",
+            diagram: "Timeline",
+            visual_data: {
+              events: [
+                { title: "Theoretical Foundations", desc: "Formulation of governing laws and principles.", time: "Phase 1" },
+                { title: "Empirical Validation", desc: "Rigorous testing and boundary verification.", time: "Phase 2" },
+                { title: "Production Application", desc: "Scalable real-world adoption and monitoring.", time: "Phase 3" }
+              ]
+            },
+            narration: `In practice, understanding ${topicQuery} enables informed decision making, systemic reliability, and deeper domain competence.`,
+            code: null,
             visualNotes: [
-              "Production deployment design patterns",
-              "Common engineering misconceptions resolved",
-              "Scalability and latency trade-offs"
+              "Real-world application trade-offs",
+              "Common misconceptions resolved",
+              "Foundational mastery achieved"
             ],
             estimated_duration_sec: 20,
             transition: "Let us test your knowledge in the diagnostic quiz.",
-            key_takeaway: "Real-world engineering requires balancing theoretical correctness with operational performance."
+            key_takeaway: "Sound applications require balancing theoretical correctness with practical boundary constraints."
           }
         ];
       }
+
+      const isTopicProg = isMl || /sql|database|query|javascript|typescript|python|code|program|algorithm|syntax|function/i.test(topicQuery);
 
       const synthesizedTopic = {
         id: slug,
@@ -777,19 +845,27 @@ export const LearningProvider = ({ children }) => {
           { term: "Operational Invariant", definition: "A condition that remains consistently true throughout all state transitions." },
           { term: "Validation Discipline", definition: "Separating training/development from validation to guarantee genuine performance." }
         ],
-        codeExamples: [
+        codeExamples: isTopicProg ? [
           {
             title: `Practical ${formattedTitle} Implementation`,
-            lang: "python",
-            code: `# Practical demonstration\ndef run_pipeline():\n    return True\nprint(run_pipeline())`
+            lang: isMl ? "python" : "code",
+            code: isMl ? `# Machine Learning Pipeline\nfrom sklearn.model_selection import train_test_split\n# model.fit(X_train, y_train)` : `// Implementation example for ${topicQuery}`
           }
-        ],
-        practicalTask: {
+        ] : [],
+        practicalTask: isTopicProg ? {
           title: `Task: Apply ${formattedTitle}`,
           instructions: `Implement a test function validating the key invariant of ${topicQuery}.`,
           starterCode: `def solve():\n    return True\nprint(solve())`,
           expectedOutput: "True",
-          solution: `def solve():\n    return True`
+          solution: `def solve():\n    return True`,
+          is_coding: true
+        } : {
+          title: `Analytical Reflection: ${formattedTitle}`,
+          instructions: `Analyze how the fundamental principles of ${topicQuery} operate under boundary conditions.`,
+          starterCode: null,
+          expectedOutput: "Comprehensive conceptual analysis",
+          solution: null,
+          is_coding: false
         },
         quizQuestions: []
       };
